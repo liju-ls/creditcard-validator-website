@@ -1,9 +1,17 @@
 let cardNumberField = document.getElementById("card-number");
+let cardField = document.getElementById("card");
+let styleChanged = false;
 
 cardNumberField.addEventListener("input", (e) => {
   let cardNum = e.target.value;
+
+  if (cardNum.length > 20) {
+    e.target.value = cardNum.slice(0, 20);
+  }
+
   cardNum = cardNum.split("").reverse().join("");
-  if (cardNum.length >= 11) {
+
+  if (cardNum.length >= 12) {
     let sum = 0;
     for (let i = 0; i < cardNum.length; i++) {
       if (i == 0 || i % 2 == 0) {
@@ -15,9 +23,15 @@ cardNumberField.addEventListener("input", (e) => {
     }
 
     if (sum % 10 == 0) {
-      console.log("Valid");
+      cardField.style.boxShadow = "0 0 50px rgba(0, 255, 0, 1)";
+      styleChanged = true;
     } else {
-      console.log("Not valid");
+      cardField.style.boxShadow = "0 0 50px rgba(255, 0, 0, 1)";
+      styleChanged = true;
+    }
+  } else {
+    if (styleChanged) {
+      cardField.style.boxShadow = "0 0 50px rgba(0, 0, 0, 0.3)";
     }
   }
 });
